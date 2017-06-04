@@ -26,6 +26,8 @@ class ImplicitArrayBag[+A](bag: Array[A]) extends Bag[A] {
     Bag(bag.map(f): _*)
 
   override def flatMap[B](f: A => Bag[B]): Bag[B] =
+    // note that we can compose functions using the andThen method
+    // also note that we can make rather simple lambda functions using the unnamed parameter syntax as shown below
     Bag(bag.flatMap(f.andThen(_.toArray)): _*)
 
   override def filter(p: A => Boolean): Bag[A] =
