@@ -10,8 +10,8 @@ import com.spr.scala.Bag
 // note two bits of syntax here:
 // 1. fields that double as constructor params can be placed in parenthesis after the class name
 // 2. implementing a trait uses "extends" just as it would when extending a class. there is no implements keyword
-class ImplicitArrayBag[+T](bag: Array[T]) extends Bag[T] {
-  override def add[S >: T](item: S): Bag[S] =
+class ImplicitArrayBag[+A](bag: Array[A]) extends Bag[A] {
+  override def add[A1 >: A](item: A1): Bag[A1] =
     // the :+ and +: methods are used to add an item to a collection.
     // ordering works like this:
     // collection :+ item
@@ -19,28 +19,28 @@ class ImplicitArrayBag[+T](bag: Array[T]) extends Bag[T] {
     // the COLon goes on the COLlection side (as noted in the scaladocs)
     new ImplicitArrayBag(bag :+ item)
 
-  override def remove(p: T => Boolean): Bag[T] =
+  override def remove(p: A => Boolean): Bag[A] =
     new ImplicitArrayBag(bag.filterNot(p))
 
-  override def map[U](f: (T) => U): Bag[U] =
+  override def map[B](f: A => B): Bag[B] =
     Bag(bag.map(f): _*)
 
-  override def flatMap[U](f: (T) => Bag[U]): Bag[U] =
+  override def flatMap[B](f: A => Bag[B]): Bag[B] =
     Bag(bag.flatMap(f.andThen(_.toArray)): _*)
 
-  override def filter(p: (T) => Boolean): Bag[T] =
+  override def filter(p: A => Boolean): Bag[A] =
     Bag(bag.filter(p): _*)
 
-  override def reduce[S >: T](acc: (S, S) => S): Option[S] =
+  override def reduce[A1 >: A](acc: (A1, A1) => A1): Option[A1] =
     bag.reduceOption(acc)
 
-  override def toArray[S >: T]: Array[S] =
+  override def toArray[A1 >: A]: Array[A1] =
     Array(bag: _*)
 
-  override def toStream: Stream[T] =
+  override def toStream: Stream[A] =
     Stream(bag: _*)
 
-  override def contains(p: (T) => Boolean): Boolean =
+  override def contains(p: A => Boolean): Boolean =
     bag.exists(p)
 
   override def size: Int =
@@ -49,6 +49,6 @@ class ImplicitArrayBag[+T](bag: Array[T]) extends Bag[T] {
   override def isEmpty: Boolean =
     bag.isEmpty
 
-  override def iterator: Iterator[T] =
+  override def iterator: Iterator[A] =
     bag.iterator
 }
