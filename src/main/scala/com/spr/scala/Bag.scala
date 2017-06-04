@@ -1,7 +1,5 @@
 package com.spr.scala
 
-import com.spr.scala.impl.ImplicitArrayBag
-
 /**
   * Scala version of a Bag. Note that by inheriting from `Iterable`, many of our equivalent methods from the Java
   * version of `Bag` are defined already.
@@ -57,5 +55,7 @@ object Bag {
   def apply[A](items: A*): Bag[A] =
     // using varargs can be confusing sometimes. in order to expand out a collection of some sort into another varargs
     // method, we must attach the "_*" type to it to indicate to the compiler to expand it
-    new ImplicitArrayBag(Array(items: _*))
+    // also note that we can qualify classes based on subpackages in our current scope rather than having to fully
+    // qualify or import those classes
+    new impl.ImplicitArrayBag(Array(items: _*))
 }
