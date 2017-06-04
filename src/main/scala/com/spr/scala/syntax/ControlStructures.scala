@@ -31,7 +31,7 @@ object ControlStructures {
   // Unit is essentially a void return value
   def printNLines(line: String, n: Int): Unit = {
     // instead of typical for loops, Scala provides us with very powerful foreach loops
-    // in this example, <- is the "in" operator, a 0.to(n) (or "0 to n" in infix notation) creates an iterable range
+    // in this example, <- is the "in" operator, and 0.to(n) (or "0 to n" in infix notation) creates an iterable range
     // also note we do not need to declare a "val" before "i"
     for (i <- 0 to n) {
       // template strings are super handy and are created by prefixing a string with s
@@ -59,7 +59,7 @@ object ControlStructures {
   // in Scala, Iterable (which is slightly different from java.lang.Iterable) is not the most generic type we can use
   // for a foreach loop (TraversableOnce is the most generic one), but this is more similar to our Java code
   def joinLines(lines: Iterable[String]): String = {
-    // Scala provides its own StringBuilder class on type of the Java one partially due to historical reasons
+    // Scala provides its own StringBuilder class on top of the Java one partially due to historical reasons
     val sb = StringBuilder.newBuilder
     for (line <- lines) {
       sb.append(line).append('\n')
